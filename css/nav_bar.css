@@ -1,0 +1,28 @@
+.nav-bar {
+  display: flex;
+  background-color: #8F8F8F;
+}
+
+.nav-item {
+}
+
+button {
+  border: 1px solid #505051;
+  background-color: #8F8F8F;
+  border-radius: 4px;
+  padding: 0 5px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button:focus {
+  outline: 0;
+}
+
+.setting-button{
+  margin: 3px;
+  font-size: 20px;
+  color: #E7E7E7;
+}
