@@ -2,14 +2,16 @@
   "manifest_version": 2,
 
   "name": "Fantasy Hype Train",
-  "description": "This extension will help players stay in the loop!",
+  "description": "Shows players who did well!",
   "version": "1.0",
-
+  "background": {
+     "scripts": [
+       "background.js"
+     ],
+     "persistent": true
+   },
   "browser_action": {
    "default_icon": "icon.png",
    "default_popup": "popup.html"
-  },
-  "permissions": [
-   "activeTab"
-   ]
+  }
 }
