@@ -1,5 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
+import 'grommet/scss/vanilla/index';
+
 
 import App from './lib/components/app';
 

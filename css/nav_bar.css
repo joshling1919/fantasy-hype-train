@@ -1,14 +1,16 @@
 .nav-bar {
   display: flex;
   background-color: #8F8F8F;
+  border: 1px outset #505051;
 }
 
 .nav-item {
 }
 
 button {
-  border: 1px solid #505051;
+  border: 1px outset #505051;
   background-color: #8F8F8F;
+  background: linear-gradient(to #8F8F8F , #505051);
   border-radius: 4px;
   padding: 0 5px;
 }

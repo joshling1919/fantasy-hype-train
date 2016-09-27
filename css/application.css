@@ -1,10 +1,11 @@
 @import url("reset.css");
+@import url("../styles.min.css");
 @import url("nav_bar.css");
 
 main#root {
   width: 350px;
   margin: 2px;
-  border: 1px solid #4F4F4F;
+  /*border: 1px solid #4F4F4F;*/
 }
 
 .clearfix:after {
