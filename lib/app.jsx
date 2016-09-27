@@ -1,8 +1,8 @@
 import React from 'react';
 
 
-import NavBar from './components/nav_bar/nav_bar';
-import Body from './components/body/body';
+import NavBarContainer from './components/nav_bar/nav_bar_container';
+import BodyContainer from './components/body/body_container';
 
 
 class App extends React.Component {
@@ -25,8 +25,8 @@ class App extends React.Component {
   render() {
     return(
       <div className="app">
-        <NavBar />
-        <Body />
+        <NavBarContainer />
+        <BodyContainer />
           <div>
             Click: {this.props.count}
           </div>

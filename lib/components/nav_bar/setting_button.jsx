@@ -1,15 +1,13 @@
 import React from 'react';
 
-class SettingButton extends React.Component {
+const SettingButton = ({handleClick}) => {
+  return(
+    <button className='setting-button' onClick={handleClick}>
+      {String.fromCharCode(9881)}
+    </button>
+  );
+};
 
-  render(){
-    return(
-      <button className='setting-button'>
-        {String.fromCharCode(9881)}
-      </button>
-    );
-  }
-}
 
 
 export default SettingButton;
