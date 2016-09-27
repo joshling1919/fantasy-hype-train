@@ -5,7 +5,7 @@ import NavBarContainer from './components/nav_bar/nav_bar_container';
 import BodyContainer from './components/body/body_container';
 
 
-class App extends React.Component {
+class MyApp extends React.Component {
 
   constructor(props) {
     super(props);
@@ -37,4 +37,4 @@ class App extends React.Component {
 
 
 
-export default App;
+export default MyApp;
