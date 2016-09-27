@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'grommet/scss/vanilla/index';
 
 import configureStore from './lib/store/store';
 import Root from './lib/root';

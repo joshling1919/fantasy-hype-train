@@ -31,8 +31,7 @@ module.exports = {
   },
   sassLoader: {
   includePaths: [
-    './node_modules',
-    './node_modules/grommet/node_modules'
+    './node_modules'
     ]
   },
   devtool: 'source-maps',
