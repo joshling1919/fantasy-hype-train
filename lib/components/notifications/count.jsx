@@ -10,7 +10,6 @@ class Count extends React.Component {
   componentDidMount(){
     document.addEventListener('click', () => {
       const propsSub = this.props;
-      debugger;
       this.props.dispatch({
         type: 'ADD_COUNT'
       });
@@ -20,7 +19,7 @@ class Count extends React.Component {
   render(){
     return(
       <div>
-        GOOGLE
+        Click: {this.props.count}
       </div>
     );
   }

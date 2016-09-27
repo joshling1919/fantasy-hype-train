@@ -2,11 +2,14 @@ const path = require("path");
 
 module.exports = {
   context: __dirname,
-  entry: "./index.jsx",
+  entry: {
+    "indexEntry": "./index.jsx",
+    "backgroundEntry": "./background.js"
+  },
   output: {
     path: "./lib",
     publicPath: "/lib/",
-    filename: "bundle.js",
+    filename: "[name].js",
     devtoolModuleFilenameTemplate: '[resourcePath]',
     devtoolFallbackModuleFilenameTemplate: '[resourcePath]?[hash]'
   },

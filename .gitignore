@@ -1,3 +1,7 @@
 node_modules/
 bundle.js
 bundle.js.map
+backgroundEntry.js
+backgroundEntry.js.map
+indexEntry.js
+indexEntry.js.map
