@@ -3,11 +3,22 @@ import React from 'react';
 class Settings extends React.Component {
   constructor(props){
     super(props);
+    let addSettingOn = true;
+    if (localStorage.addSettingOn !== undefined) {
+      addSettingOn = (localStorage.addSettingOn === "true");
+    }
+    let addsNum = parseInt(localStorage.addsNum) || 1000;
+
+    let percentageSettingOn = true;
+    if (localStorage.percentageSettingOn !== undefined) {
+      percentageSettingOn = (localStorage.percentageSettingOn === "true");
+    }
+    let percentageNum = parseInt(localStorage.percentageNum) || 5;
     this.state = {
-      addSettingOn: true,
-      addsNum: 1000,
-      percentageSettingOn: true,
-      percentageNum: 5
+      addSettingOn: addSettingOn,
+      addsNum: addsNum,
+      percentageSettingOn: percentageSettingOn,
+      percentageNum: percentageNum
     };
   }
 
