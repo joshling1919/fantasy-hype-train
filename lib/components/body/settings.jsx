@@ -4,24 +4,81 @@ class Settings extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      adds: true,
-      percentage: true
+      addSettingOn: true,
+      addsNum: 1000,
+      percentageSettingOn: true,
+      percentageNum: 5
     };
   }
 
-  handleCheckbox(){
-    let change = this.state.adds ? false : true;
+  handleAddsCheckbox(e){
+    let change = this.state.addSettingOn ? false : true;
     this.setState({
-      adds: change
+      addSettingOn: change
     });
   }
 
-  prefillAdd(){
-    if (localStorage.settings !== undefined) {
-      return localStorage.settings.add;
+  handlePercentageCheckbox(e){
+    let change = this.state.percentageSettingOn ? false : true;
+    this.setState({
+      percentageSettingOn: change
+    });
+  }
+
+  handlePercentageNum(e){
+    this.setState({
+      percentageNum: parseInt(e.target.value)
+    });
+  }
+
+  handleAddsNum(e){
+    this.setState({
+      addsNum: parseInt(e.target.value)
+    });
+  }
+
+  prefillAddSettings(){
+    if (localStorage.addSettingOn !== undefined) {
+      const addSettingOn = (localStorage.addSettingOn === "true");
+      return addSettingOn;
     } else {
-      return this.state.adds;
+      return this.state.addSettingOn;
     }
+  }
+
+  prefillAddsNum(){
+    if (localStorage.addsNum !== undefined) {
+      const addsNum = parseInt(localStorage.addsNum);
+      return addsNum;
+    } else {
+      return this.state.addsNum;
+    }
+  }
+
+  prefillPercentSettings(){
+    if (localStorage.percentageSettingOn !== undefined) {
+      const percentageSettingOn = (localStorage.percentageSettingOn === true);
+      return localStorage.percentageSettingOn;
+    } else {
+      return this.state.percentage;
+    }
+  }
+
+  prefillPercentNum(){
+    if (localStorage.percentageNum !== undefined) {
+      const percentageNum = parseInt(localStorage.percentageNum);
+      return percentageNum;
+    } else {
+      return this.state.percentageNum;
+    }
+
+  }
+  saveSettings(e){
+    e.preventDefault();
+    localStorage.setItem("addSettingOn", this.state.addSettingOn);
+    localStorage.setItem("addsNum", this.state.addsNum);
+    localStorage.setItem("percentageSettingOn", this.state.percentageSettingOn);
+    localStorage.setItem("percentageNum", this.state.percentageNum);
   }
 
   render(){
@@ -30,32 +87,40 @@ class Settings extends React.Component {
         <div>
           Notify me of:
         </div>
-        <label className="settings-label">
+        <div>
           <input type="checkbox"
             name="Net Adds"
-            checked={this.prefillAdd()}
-            onChange={this.handleCheckbox.bind(this)}/>
-          Net Adds(Adds - Drops)
+            defaultChecked={this.prefillAddSettings()}
+            onChange={this.handleAddsCheckbox.bind(this)}/>
+          Net Adds (Adds - Drops)
           <span> above </span>
           <input className="settings-number"
             type="number"
             min={100}
             step={100}
-            defaultValue={1000}/>
-        </label>
+            onChange={this.handleAddsNum.bind(this)}
+            defaultValue={this.prefillAddsNum()}/>
+        </div>
 
-        <label className="settings-label">
-          <input type="checkbox" name="Percent Change"/>
+        <div>
+          <input type="checkbox"
+            name="Percent Change"
+            onChange={this.handlePercentageCheckbox.bind(this)}
+            defaultChecked={this.prefillPercentSettings()}/>
           Ownership Percentage Change
           <span> above </span>
-            <input className="settings-percent"
-              type="number"
-              min={1}
-              max={99}
-              step={1}
-              defaultValue={5}/>
-            %
-        </label>
+          <input className="settings-percent"
+            type="number"
+            min={1}
+            max={99}
+            step={1}
+            onChange={this.handlePercentageNum.bind(this)}
+            defaultValue={this.prefillPercentNum()}/>
+          %
+        </div>
+          <div>
+            <button onClick={this.saveSettings.bind(this)}>Save</button>
+          </div>
       </div>
     );
   }
