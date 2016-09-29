@@ -1,5 +1,7 @@
 import React from 'react';
 
+import FeedAccordion from './feed_accordion';
+
 class Feed extends React.Component {
 
 
@@ -14,25 +16,21 @@ class Feed extends React.Component {
     }
   }
 
+  feed(){
+    const arr = [];
+    [1,2,3,4,5,6,7,8,9,10].forEach(num => {
+      arr.push(<FeedAccordion key={num} title={num}/>);
+    });
+    return arr;
+  }
+
   render(){
 
     return(
       <div>
         this is the feeds page
-        <button className="accordion">Section 1</button>
-        <div className="panel">
-            <p>Lorem ipsum...</p>
-          </div>
+        {this.feed()}
 
-        <button className="accordion">Section 2</button>
-        <div className="panel">
-            <p>Lorem ipsum...</p>
-          </div>
-
-        <button className="accordion">Section 3</button>
-        <div className="panel">
-            <p>Lorem ipsum...</p>
-          </div>
       </div>
     );
   }
