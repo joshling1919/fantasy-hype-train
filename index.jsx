@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import "./css/application.scss";
 
 import configureStore from './lib/store/store';
-import {Store} from 'react-chrome-redux';
+// import {Store} from 'react-chrome-redux';
 import {Provider} from 'react-redux';
 
 // import Root from './lib/root';
@@ -16,16 +16,14 @@ import { requestPlayers } from './lib/actions/feed_actions';
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  const proxyStore = new Store({
-    portName: 'FHT'
-  });
+  // const proxyStore = new Store({
+  //   portName: 'FHT'
+  // });
   const store = configureStore();
-  window.fetchPlayers = fetchPlayers;
-  window.requestPlayers = requestPlayers;
-  window.store = store;
+  // window.store = store;
   const root = document.getElementById('root');
   ReactDOM.render(
-      <Provider store={proxyStore}>
+      <Provider store={store}>
         <AppContainer />
       </Provider>
     , root);

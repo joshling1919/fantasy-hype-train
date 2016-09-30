@@ -94,7 +94,7 @@ class Settings extends React.Component {
 
   render(){
     return(
-      <div>
+      <div className="body">
         <div>
           Notify me of:
         </div>
