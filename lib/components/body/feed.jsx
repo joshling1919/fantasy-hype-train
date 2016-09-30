@@ -6,6 +6,16 @@ class Feed extends React.Component {
 
 
   componentDidMount(){
+    this.props.requestPlayers();
+
+    // document.addEventListener('click', () => {
+    //   const propsSub = this.props;
+    //   debugger;
+    //   this.props.dispatch({
+    //     type: 'REQUEST_PLAYERS'
+    //   });
+    // });
+
     let acc = document.getElementsByClassName("accordion");
 
     for (let i = 0; i < acc.length; i++) {

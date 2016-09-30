@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Settings from './settings';
-import Feed from './feed';
+import FeedContainer from './feed_container';
 
 class Body extends React.Component {
 
@@ -12,7 +12,7 @@ class Body extends React.Component {
       );
     } else if (this.props.selectedButton === "feed") {
       return(
-        <Feed />
+        <FeedContainer />
       );
     } else {
       return(
