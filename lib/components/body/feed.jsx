@@ -1,6 +1,7 @@
 import React from 'react';
 
 import FeedAccordion from './feed_accordion';
+import Loader from './loader';
 
 class Feed extends React.Component {
 
@@ -18,14 +19,17 @@ class Feed extends React.Component {
   }
 
   render(){
-
-    return(
-      <div className="body">
-        this is the feeds page
-        {this.feed()}
-
-      </div>
-    );
+    if (this.props.isLoading) {
+      return(
+        <Loader />
+      );
+    } else {
+      return(
+        <div className="body">
+          {this.feed()}
+        </div>
+      );
+    }
   }
 
 }

@@ -59,53 +59,6 @@ class Settings extends React.Component {
   }
 
 
-  // prefillAddSettings(){
-  //   if (localStorage.addSettingOn !== undefined) {
-  //     const addSettingOn = (localStorage.addSettingOn === "true");
-  //     return addSettingOn;
-  //   } else {
-  //     return this.state.addSettingOn;
-  //   }
-  // }
-
-  // prefillAddsNum(){
-  //   if (localStorage.addsNum !== undefined) {
-  //     const addsNum = parseInt(localStorage.addsNum);
-  //     return addsNum;
-  //   } else {
-  //     return this.state.addsNum;
-  //   }
-  // }
-  //
-  // prefillPercentSettings(){
-  //   if (localStorage.percentageSettingOn !== undefined) {
-  //     const percentageSettingOn = (localStorage.percentageSettingOn === true);
-  //     return localStorage.percentageSettingOn;
-  //   } else {
-  //     return this.state.percentage;
-  //   }
-  // }
-
-  // prefillPercentNum(){
-  //   if (localStorage.percentageNum !== undefined) {
-  //     const percentageNum = parseInt(localStorage.percentageNum);
-  //     return percentageNum;
-  //   } else {
-  //     return this.state.percentageNum;
-  //   }
-  //
-  // }
-  //
-  // prefillOwnershipMaxPercentage(){
-  //   if (localStorage.ownershipMaxPercentage !== undefined) {
-  //     const ownershipMaxPercentage = parseInt(localStorage.ownershipMaxPercentage);
-  //     return ownershipMaxPercentage;
-  //   } else {
-  //     return this.state.ownershipMaxPercentage;
-  //   }
-  // }
-
-
   saveSettings(e){
     e.preventDefault();
     localStorage.setItem("addSettingOn", this.state.addSettingOn);
