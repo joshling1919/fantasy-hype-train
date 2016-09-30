@@ -14,12 +14,15 @@ class FeedAccordion extends React.Component {
       return(
         <span>
           <span>{player.lastName}, {player.firstName[0]}. ({player.teamAbbr}- {player.position})</span>
-          <span>Stats</span>
+          <span className="label-stats"> Stats</span>
         </span>
       );
     } else {
       return(
-        `${player.firstName} ${player.lastName} (${player.position})`
+        <span>
+          <span>{player.firstName} {player.lastName} ({player.position})</span>
+          <span className="label-stats"> Stats</span>
+        </span>
       );
     }
   }

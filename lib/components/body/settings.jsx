@@ -7,18 +7,22 @@ class Settings extends React.Component {
     if (localStorage.addSettingOn !== undefined) {
       addSettingOn = (localStorage.addSettingOn === "true");
     }
-    let addsNum = parseInt(localStorage.addsNum) || 1000;
+    let addsNum = parseInt(localStorage.addsNum) || 5000;
 
     let percentageSettingOn = true;
     if (localStorage.percentageSettingOn !== undefined) {
       percentageSettingOn = (localStorage.percentageSettingOn === "true");
     }
+
+    let ownershipMaxPercentage = parseInt(localStorage.ownershipMaxPercentage) || 50;
+
     let percentageNum = parseInt(localStorage.percentageNum) || 5;
     this.state = {
       addSettingOn: addSettingOn,
       addsNum: addsNum,
       percentageSettingOn: percentageSettingOn,
-      percentageNum: percentageNum
+      percentageNum: percentageNum,
+      ownershipMaxPercentage: ownershipMaxPercentage
     };
   }
 
@@ -48,49 +52,69 @@ class Settings extends React.Component {
     });
   }
 
-  prefillAddSettings(){
-    if (localStorage.addSettingOn !== undefined) {
-      const addSettingOn = (localStorage.addSettingOn === "true");
-      return addSettingOn;
-    } else {
-      return this.state.addSettingOn;
-    }
+  updateSlider(e){
+    this.setState({
+      ownershipMaxPercentage: e.currentTarget.value
+    });
   }
 
-  prefillAddsNum(){
-    if (localStorage.addsNum !== undefined) {
-      const addsNum = parseInt(localStorage.addsNum);
-      return addsNum;
-    } else {
-      return this.state.addsNum;
-    }
-  }
 
-  prefillPercentSettings(){
-    if (localStorage.percentageSettingOn !== undefined) {
-      const percentageSettingOn = (localStorage.percentageSettingOn === true);
-      return localStorage.percentageSettingOn;
-    } else {
-      return this.state.percentage;
-    }
-  }
+  // prefillAddSettings(){
+  //   if (localStorage.addSettingOn !== undefined) {
+  //     const addSettingOn = (localStorage.addSettingOn === "true");
+  //     return addSettingOn;
+  //   } else {
+  //     return this.state.addSettingOn;
+  //   }
+  // }
 
-  prefillPercentNum(){
-    if (localStorage.percentageNum !== undefined) {
-      const percentageNum = parseInt(localStorage.percentageNum);
-      return percentageNum;
-    } else {
-      return this.state.percentageNum;
-    }
+  // prefillAddsNum(){
+  //   if (localStorage.addsNum !== undefined) {
+  //     const addsNum = parseInt(localStorage.addsNum);
+  //     return addsNum;
+  //   } else {
+  //     return this.state.addsNum;
+  //   }
+  // }
+  //
+  // prefillPercentSettings(){
+  //   if (localStorage.percentageSettingOn !== undefined) {
+  //     const percentageSettingOn = (localStorage.percentageSettingOn === true);
+  //     return localStorage.percentageSettingOn;
+  //   } else {
+  //     return this.state.percentage;
+  //   }
+  // }
 
-  }
+  // prefillPercentNum(){
+  //   if (localStorage.percentageNum !== undefined) {
+  //     const percentageNum = parseInt(localStorage.percentageNum);
+  //     return percentageNum;
+  //   } else {
+  //     return this.state.percentageNum;
+  //   }
+  //
+  // }
+  //
+  // prefillOwnershipMaxPercentage(){
+  //   if (localStorage.ownershipMaxPercentage !== undefined) {
+  //     const ownershipMaxPercentage = parseInt(localStorage.ownershipMaxPercentage);
+  //     return ownershipMaxPercentage;
+  //   } else {
+  //     return this.state.ownershipMaxPercentage;
+  //   }
+  // }
+
+
   saveSettings(e){
     e.preventDefault();
     localStorage.setItem("addSettingOn", this.state.addSettingOn);
     localStorage.setItem("addsNum", this.state.addsNum);
     localStorage.setItem("percentageSettingOn", this.state.percentageSettingOn);
     localStorage.setItem("percentageNum", this.state.percentageNum);
+    localStorage.setItem("ownershipMaxPercentage", this.state.ownershipMaxPercentage);
   }
+
 
   render(){
     return(
@@ -101,7 +125,7 @@ class Settings extends React.Component {
         <div>
           <input type="checkbox"
             name="Net Adds"
-            defaultChecked={this.prefillAddSettings()}
+            checked={this.state.addSettingOn}
             onChange={this.handleAddsCheckbox.bind(this)}/>
           Net Adds (Adds - Drops)
           <span> above </span>
@@ -110,14 +134,14 @@ class Settings extends React.Component {
             min={100}
             step={100}
             onChange={this.handleAddsNum.bind(this)}
-            defaultValue={this.prefillAddsNum()}/>
+            value={this.state.addsNum}/>
         </div>
 
         <div>
           <input type="checkbox"
             name="Percent Change"
             onChange={this.handlePercentageCheckbox.bind(this)}
-            defaultChecked={this.prefillPercentSettings()}/>
+            checked={this.state.percentageSettingOn}/>
           Ownership Percentage Change
           <span> above </span>
           <input className="settings-percent"
@@ -126,12 +150,35 @@ class Settings extends React.Component {
             max={99}
             step={1}
             onChange={this.handlePercentageNum.bind(this)}
-            defaultValue={this.prefillPercentNum()}/>
+            value={this.state.percentageNum}/>
           %
         </div>
+
+        <div className="slider-container">
           <div>
-            <button onClick={this.saveSettings.bind(this)}>Save</button>
+            Only give notifications for players with ownership percentage less than:
           </div>
+          <div>
+            <input className="ownership-slider"
+              type="range"
+              min={0}
+              max={100}
+              step={1}
+              onChange={this.updateSlider.bind(this)}
+              value={this.state.ownershipMaxPercentage}/>
+              <input className="settings-percent"
+                type="number"
+                min={0}
+                max={100}
+                step={1}
+                onChange={this.updateSlider.bind(this)}
+                value={this.state.ownershipMaxPercentage}/> %
+          </div>
+        </div>
+
+        <div>
+          <button onClick={this.saveSettings.bind(this)}>Save</button>
+        </div>
       </div>
     );
   }
