@@ -1,9 +1,68 @@
-import configureStore from './lib/store/store';
+function createCORSRequest(method, url) {
+  var xhr = new XMLHttpRequest();
+  if ("withCredentials" in xhr) {
+    // XHR for Chrome/Firefox/Opera/Safari.
+    xhr.open(method, url, true);
+  } else if (typeof XDomainRequest != "undefined") {
+    // XDomainRequest for IE.
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+  } else {
+    // CORS not supported.
+    xhr = null;
+  }
+  return xhr;
+}
 
-import {wrapStore} from 'react-chrome-redux';
+function formatParams( params ){
+  return "?" + Object
+        .keys(params)
+        .map(function(key){
+          return key+"="+params[key];
+        })
+        .join("&");
+}
 
-const store = configureStore();
+const fetchPlayers = function(query, success) {
+  //eventually to http://fht-db.herokuapp.com/api/players
+  // http://localhost:3000/api/players
+  const url = 'http://localhost:3000/api/players';
+  const xhr = createCORSRequest('GET', url + formatParams(query));
 
-wrapStore(store, {
-  portName: 'FHT'
+  if (!xhr) {
+    console.log('CORS not supported');
+    return;
+  }
+
+
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onload = function(data) {
+    let response = data.currentTarget;
+    if (response.status >= 200 && response.status < 400) {
+      success(response.responseText);
+    } else {
+      console.log(data);
+    }
+  };
+
+  xhr.onerror = function(error) {
+    console.log(error);
+    // There was a connection error of some sort
+  };
+  xhr.send(JSON.stringify(query));
+};
+
+const storePlayerData = (data) => {
+  console.log('storing data!');
+  const players = JSON.parse(data);
+  chrome.storage.local.set({ allPlayers: players});
+};
+
+chrome.alarms.create('updatePlayers', {
+      delayInMinutes: .1, periodInMinutes: 1});
+
+
+chrome.alarms.onAlarm.addListener(function( alarm ) {
+  console.log("Got an alarm!", alarm);
+  fetchPlayers(localStorage, storePlayerData);
 });

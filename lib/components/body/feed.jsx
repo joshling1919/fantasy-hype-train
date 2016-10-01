@@ -12,9 +12,19 @@ class Feed extends React.Component {
 
   feed(){
     const playersArray = [];
-    this.props.feed.forEach(player => {
-      playersArray.push(<FeedAccordion key={player.nflId} player={player}/>);
-    });
+    const players = this.props.feed;
+
+    let limit = 50;
+    if (players.length < 50) {
+      limit = players.length;
+    }
+    let currentlyRendered = {};
+    for (let i = 0; i < limit; i++) {
+      currentlyRendered[players[i].nflId] = true;
+      playersArray.push(<FeedAccordion key={players[i].nflId} player={players[i]}/>);
+    }
+    debugger;
+    chrome.storage.local.set({previouslyRendered: currentlyRendered});
     return playersArray;
   }
 
