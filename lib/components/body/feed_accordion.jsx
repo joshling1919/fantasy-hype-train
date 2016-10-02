@@ -12,9 +12,15 @@ class FeedAccordion extends React.Component {
   storeSeen(){
     this.setState({ isNew: false });
 
-    chrome.storage.local.get('previouslySeen', function(prevSeenObj) {
+    chrome.storage.local.get('previouslySeen', prevSeenObj => {
       prevSeenObj[this.props.player.nflId] = true;
       chrome.storage.local.set({ previouslySeen: prevSeenObj });
+
+      chrome.browserAction.getBadgeText({}, text => {
+        let count = parseInt(text);
+        count--;
+        chrome.browserAction.setBadgeText({text: count.toString()});
+      });
     });
     //sneed to test
   }
@@ -29,10 +35,6 @@ class FeedAccordion extends React.Component {
   markAsSeen(e){
     e.stopPropagation();
     this.storeSeen();
-    // probably actually control the isNew props in internal state
-    // that way it can first show up, but, if it does change 'onClick'
-    // then we can set state so that it stops rendering, and
-    // so that it can be stored in the 'seen' object in storage.
   }
 
   newTag(){
@@ -72,7 +74,7 @@ class FeedAccordion extends React.Component {
     return (
       <div>
         <button className="accordion"
-          onClick={this.toggleAccordion}>{this.accordionLabel()}</button>
+          onClick={this.toggleAccordion.bind(this)}>{this.accordionLabel()}</button>
         <div className="panel">
           <p>{player.percentOwnedChange}% increase in ownership</p>
           <p>{player.netAdds} net adds</p>
