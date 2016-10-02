@@ -52,17 +52,51 @@ const fetchPlayers = function(query, success) {
   xhr.send(JSON.stringify(query));
 };
 
-const storePlayerData = (data) => {
-  console.log('storing data!');
+const updateBadgeIcon = new Promise(function(resolve, reject) {
+  chrome.storage.local.get("previouslyRendered", resolve);
+});
+
+const storePlayerData = data => {
   const players = JSON.parse(data);
-  chrome.storage.local.set({ allPlayers: players});
+
+  // promise gets previouslyRendered object
+  // iterates over new data from server and compares with
+  // previouslyRendered. If it was not previously rendered,
+  // it gets marked with isNew.
+  // At the end of the promise, set the allPlayers key in storage
+  // with the new data
+  updateBadgeIcon.then(function(prevStored) {
+    let limit = 50;
+    if (players.length < 50) {
+      limit = players.length;
+    }
+    let prevRendered = prevStored.previouslyRendered;
+    let count = 0;
+    for (let i = 0; i < limit; i++) {
+      if (!prevRendered || !prevRendered[players[i].nflId]) {
+        players[i].isNew = true;
+        count++;
+      }
+    }
+    if (count > 0) {
+      chrome.browserAction.setBadgeText({text: count.toString()});
+    }
+    chrome.storage.local.set({ allPlayers: players});
+  }, function(prevStored) {
+    console.log(prevStored);
+  });
 };
+
 
 chrome.alarms.create('updatePlayers', {
       delayInMinutes: .1, periodInMinutes: 1});
 
+//create an empty 'previouslySeen' object
+chrome.storage.local.set({ previouslySeen: {} });
+
 
 chrome.alarms.onAlarm.addListener(function( alarm ) {
+  chrome.storage.local.clear(function(data){console.log(data)});
   console.log("Got an alarm!", alarm);
   fetchPlayers(localStorage, storePlayerData);
 });

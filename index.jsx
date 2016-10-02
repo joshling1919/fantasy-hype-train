@@ -16,7 +16,6 @@ import { requestPlayers } from './lib/actions/feed_actions';
 document.addEventListener('DOMContentLoaded', () => {
 
   const store = configureStore();
-  // window.store = store;
   const root = document.getElementById('root');
   ReactDOM.render(
       <Provider store={store}>

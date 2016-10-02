@@ -20,10 +20,17 @@ class Feed extends React.Component {
     }
     let currentlyRendered = {};
     for (let i = 0; i < limit; i++) {
+      let isNew = false;
+      if (players[i].isNew) {
+        isNew = true;
+      }
       currentlyRendered[players[i].nflId] = true;
-      playersArray.push(<FeedAccordion key={players[i].nflId} player={players[i]}/>);
+      playersArray.push(<FeedAccordion key={players[i].nflId}
+                                       player={players[i]}
+                                       isNew={isNew}/>);
     }
-    debugger;
+
+    //sets all currentlyRendered as previouslyRendered players in storage.
     chrome.storage.local.set({previouslyRendered: currentlyRendered});
     return playersArray;
   }
