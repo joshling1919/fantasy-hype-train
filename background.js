@@ -1,91 +1,13 @@
-function createCORSRequest(method, url) {
-  var xhr = new XMLHttpRequest();
-  if ("withCredentials" in xhr) {
-    // XHR for Chrome/Firefox/Opera/Safari.
-    xhr.open(method, url, true);
-  } else if (typeof XDomainRequest != "undefined") {
-    // XDomainRequest for IE.
-    xhr = new XDomainRequest();
-    xhr.open(method, url);
-  } else {
-    // CORS not supported.
-    xhr = null;
-  }
-  return xhr;
+import { fetchPlayers, storePlayerData } from './lib/util/feed_api_util';
+
+
+if (!localStorage.userSettingsOn) {
+  localStorage.setItem("addSettingOn", true);
+  localStorage.setItem("addsNum", 5000);
+  localStorage.setItem("percentageSettingOn", true);
+  localStorage.setItem("percentageNum", 5);
+  localStorage.setItem("ownershipMaxPercentage", 50);
 }
-
-function formatParams( params ){
-  return "?" + Object
-        .keys(params)
-        .map(function(key){
-          return key+"="+params[key];
-        })
-        .join("&");
-}
-
-const fetchPlayers = function(query, success) {
-  //eventually to http://fht-db.herokuapp.com/api/players
-  // http://localhost:3000/api/players
-  const url = 'http://localhost:3000/api/players';
-  const xhr = createCORSRequest('GET', url + formatParams(query));
-
-  if (!xhr) {
-    console.log('CORS not supported');
-    return;
-  }
-
-
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onload = function(data) {
-    let response = data.currentTarget;
-    if (response.status >= 200 && response.status < 400) {
-      success(response.responseText);
-    } else {
-      console.log(data);
-    }
-  };
-
-  xhr.onerror = function(error) {
-    console.log(error);
-    // There was a connection error of some sort
-  };
-  xhr.send(JSON.stringify(query));
-};
-
-const updateBadgeIcon = new Promise(function(resolve, reject) {
-  chrome.storage.local.get("previouslyRendered", resolve);
-});
-
-const storePlayerData = data => {
-  const players = JSON.parse(data);
-
-  // promise gets previouslyRendered object
-  // iterates over new data from server and compares with
-  // previouslyRendered. If it was not previously rendered,
-  // it gets marked with isNew.
-  // At the end of the promise, set the allPlayers key in storage
-  // with the new data
-  updateBadgeIcon.then(function(prevStored) {
-    let limit = 50;
-    if (players.length < 50) {
-      limit = players.length;
-    }
-    let prevRendered = prevStored.previouslyRendered;
-    let count = 0;
-    for (let i = 0; i < limit; i++) {
-      if (!prevRendered || !prevRendered[players[i].nflId]) {
-        players[i].isNew = true;
-        count++;
-      }
-    }
-    if (count > 0) {
-      chrome.browserAction.setBadgeText({text: count.toString()});
-    }
-    chrome.storage.local.set({ allPlayers: players});
-  }, function(prevStored) {
-    console.log(prevStored);
-  });
-};
 
 
 chrome.alarms.create('updatePlayers', {
@@ -100,3 +22,6 @@ chrome.alarms.onAlarm.addListener(function( alarm ) {
   console.log("Got an alarm!", alarm);
   fetchPlayers(localStorage, storePlayerData);
 });
+
+
+export { fetchPlayers, storePlayerData };

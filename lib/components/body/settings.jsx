@@ -1,28 +1,17 @@
 import React from 'react';
 
+import { fetchPlayers, storePlayerData } from '../../util/feed_api_util';
+
 class Settings extends React.Component {
   constructor(props){
     super(props);
-    let addSettingOn = true;
-    if (localStorage.addSettingOn !== undefined) {
-      addSettingOn = (localStorage.addSettingOn === "true");
-    }
-    let addsNum = parseInt(localStorage.addsNum) || 5000;
 
-    let percentageSettingOn = true;
-    if (localStorage.percentageSettingOn !== undefined) {
-      percentageSettingOn = (localStorage.percentageSettingOn === "true");
-    }
-
-    let ownershipMaxPercentage = parseInt(localStorage.ownershipMaxPercentage) || 50;
-
-    let percentageNum = parseInt(localStorage.percentageNum) || 5;
     this.state = {
-      addSettingOn: addSettingOn,
-      addsNum: addsNum,
-      percentageSettingOn: percentageSettingOn,
-      percentageNum: percentageNum,
-      ownershipMaxPercentage: ownershipMaxPercentage
+      addSettingOn: localStorage.addSettingOn,
+      addsNum: localStorage.addsNum,
+      percentageSettingOn: localStorage.percentageSettingOn,
+      percentageNum: localStorage.percentageNum,
+      ownershipMaxPercentage: localStorage.ownershipMaxPercentage
     };
   }
 
@@ -66,6 +55,8 @@ class Settings extends React.Component {
     localStorage.setItem("percentageSettingOn", this.state.percentageSettingOn);
     localStorage.setItem("percentageNum", this.state.percentageNum);
     localStorage.setItem("ownershipMaxPercentage", this.state.ownershipMaxPercentage);
+    localStorage.setItem("userSettingsOn", true);
+    fetchPlayers(localStorage, storePlayerData);
   }
 
 

@@ -22,7 +22,7 @@ class FeedAccordion extends React.Component {
         chrome.browserAction.setBadgeText({text: count.toString()});
       });
     });
-    //sneed to test
+    // need to test
   }
 
   toggleAccordion(e){
