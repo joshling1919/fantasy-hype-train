@@ -11,15 +11,14 @@ import AppContainer from './lib/app_container';
 import { requestPlayers } from './lib/actions/feed_actions';
 
 
-
-
-document.addEventListener('DOMContentLoaded', () => {
-
+// ended up needing a window.setTimeout to slightly delay the rendering
+// so that popup renders correctly the first time.
+window.setTimeout(() => {
   const store = configureStore();
   const root = document.getElementById('root');
   ReactDOM.render(
-      <Provider store={store}>
-        <AppContainer />
-      </Provider>
+    <Provider store={store}>
+      <AppContainer />
+    </Provider>
     , root);
-});
+}, 10);

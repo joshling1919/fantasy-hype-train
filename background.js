@@ -12,7 +12,7 @@ if (!localStorage.userSettingsOn) {
 
 
 chrome.alarms.create('updatePlayers', {
-      delayInMinutes: .1, periodInMinutes: 1});
+      delayInMinutes: .1, periodInMinutes: 60});
 
 // chrome.storage.local.clear(function(data){console.log(data)});
 
