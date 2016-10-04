@@ -7,18 +7,19 @@ if (!localStorage.userSettingsOn) {
   localStorage.setItem("percentageSettingOn", true);
   localStorage.setItem("percentageNum", 5);
   localStorage.setItem("ownershipMaxPercentage", 50);
+  chrome.storage.local.set({ previouslySeen: {} });
 }
 
 
 chrome.alarms.create('updatePlayers', {
       delayInMinutes: .1, periodInMinutes: 1});
 
-//create an empty 'previouslySeen' object
-chrome.storage.local.set({ previouslySeen: {} });
+// chrome.storage.local.clear(function(data){console.log(data)});
+
+fetchPlayers(localStorage, storePlayerData);
 
 
 chrome.alarms.onAlarm.addListener(function( alarm ) {
-  chrome.storage.local.clear(function(data){console.log(data)});
   console.log("Got an alarm!", alarm);
   fetchPlayers(localStorage, storePlayerData);
 });

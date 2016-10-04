@@ -5,36 +5,36 @@ class FeedAccordion extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      isNew: this.props.player.isNew
+      isNew: true
     };
   }
 
   storeSeen(){
-    this.setState({ isNew: false });
-
     chrome.storage.local.get('previouslySeen', prevSeenObj => {
-      prevSeenObj[this.props.player.nflId] = true;
-      chrome.storage.local.set({ previouslySeen: prevSeenObj });
-
-      chrome.browserAction.getBadgeText({}, text => {
-        let count = parseInt(text);
-        count--;
-        chrome.browserAction.setBadgeText({text: count.toString()});
-      });
+      const prevSeen = prevSeenObj.previouslySeen;
+      prevSeen[this.props.player.nflId] = true;
+      chrome.storage.local.set({ previouslySeen: prevSeen });
+      if (this.state.isNew) {
+        chrome.browserAction.getBadgeText({}, text => {
+          let count = parseInt(text);
+          count--;
+          chrome.browserAction.setBadgeText({text: count.toString()});
+        });
+      }
+      this.setState({ isNew: false });
     });
-    // need to test
   }
 
   toggleAccordion(e){
     e.preventDefault();
-    this.storeSeen();
+    this.storeSeen.bind(this)();
     e.currentTarget.classList.toggle("active");
     e.currentTarget.nextElementSibling.classList.toggle("show");
   }
 
   markAsSeen(e){
     e.stopPropagation();
-    this.storeSeen();
+    this.storeSeen.bind(this)();
   }
 
   newTag(){
