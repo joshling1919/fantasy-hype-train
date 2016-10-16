@@ -55,7 +55,6 @@ class Settings extends React.Component {
     localStorage.setItem("percentageSettingOn", this.state.percentageSettingOn);
     localStorage.setItem("percentageNum", this.state.percentageNum);
     localStorage.setItem("ownershipMaxPercentage", this.state.ownershipMaxPercentage);
-    localStorage.setItem("userSettingsOn", true);
     fetchPlayers(localStorage, storePlayerData);
   }
 
