@@ -13,6 +13,10 @@ class NavBar extends React.Component{
           <button className="nav-button"
             onClick={this.props.goToFeed}>Feed</button>
         </div>
+        <div className="nav-item">
+          <button className="nav-button"
+            onClick={this.props.goToFavorites}>Favorites</button>
+        </div>
       </div>
     );
   }

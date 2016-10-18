@@ -11,14 +11,15 @@ if (!localStorage.userSettingsOn) {
   const initialDate = new Date();
   const initialTime = initialDate.getTime();
   localStorage.setItem("lastCleared", initialTime);
-  chrome.storage.local.set({ previouslySeen: {} });
 }
+
+chrome.storage.local.set({ previouslySeen: {} });
+chrome.storage.local.set({ favorites: {}});
 
 
 chrome.alarms.create('updatePlayers', {
       delayInMinutes: .1, periodInMinutes: 1});
 
-// chrome.storage.local.clear(function(data){console.log(data)});
 
 fetchPlayers(localStorage, storePlayerData);
 

@@ -48,6 +48,28 @@ class FeedAccordion extends React.Component {
     }
   }
 
+  toggleFavorites(e){
+    e.stopPropagation();
+    chrome.storage.local.get('favorites', favoritesObj => {
+      let favObj = favoritesObj.favorites;
+      if (favObj[this.props.player.nflId]) {
+        this.refs.favorite.style.fontWeight = 400;
+        delete favObj[this.props.player.nflId];
+      } else {
+        this.refs.favorite.style.fontWeight = 600;
+        favObj[this.props.player.nflId] = true;
+      }
+      chrome.storage.local.set({'favorites': favObj});
+    });
+  }
+
+  favorite(){
+    return(
+      <span ref="favorite"
+            onClick={this.toggleFavorites.bind(this)}>Fav</span>
+    );
+  }
+
   accordionLabel(){
     const { player } = this.props;
     if (player.position !== 'DEF') {
@@ -56,6 +78,7 @@ class FeedAccordion extends React.Component {
           <span>{player.lastName}, {player.firstName[0]}. ({player.teamAbbr}- {player.position})</span>
           <span className="label-stats"> Stats  </span>
           {this.newTag()}
+          {this.favorite()}
         </span>
       );
     } else {
@@ -64,6 +87,7 @@ class FeedAccordion extends React.Component {
           <span>{player.firstName} {player.lastName} ({player.position})</span>
           <span className="label-stats"> Stats</span>
           {this.newTag(player.isNew)}
+          {this.favorite()}
         </span>
       );
     }

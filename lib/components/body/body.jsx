@@ -2,6 +2,7 @@ import React from 'react';
 
 import Settings from './settings';
 import FeedContainer from './feed_container';
+import Favorites from './favorites';
 
 class Body extends React.Component {
 
@@ -13,6 +14,10 @@ class Body extends React.Component {
     } else if (this.props.selectedButton === "feed") {
       return(
         <FeedContainer />
+      );
+    } else if (this.props.selectedButton === "favorites") {
+      return(
+        <Favorites />
       );
     } else {
       return(
