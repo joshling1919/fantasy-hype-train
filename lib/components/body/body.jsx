@@ -2,7 +2,7 @@ import React from 'react';
 
 import Settings from './settings';
 import FeedContainer from './feed_container';
-import Favorites from './favorites';
+import FavoritesContainer from './favorites_container';
 
 class Body extends React.Component {
 
@@ -17,7 +17,7 @@ class Body extends React.Component {
       );
     } else if (this.props.selectedButton === "favorites") {
       return(
-        <Favorites />
+        <FavoritesContainer />
       );
     } else {
       return(
